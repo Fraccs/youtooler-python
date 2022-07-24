@@ -10,7 +10,7 @@ from .helpers.exceptions import TorHashingException, TorStartFailedException, To
 from .utils import get_secure_password
 
 class Tor:
-    '''Simplifies the creation of TOR circuits.'''
+    '''Simplifies the creation of TOR circuits'''
 
     def __init__(self, socks_port: int):
         self.socks_port = socks_port
@@ -19,8 +19,12 @@ class Tor:
         self.torrc_path = self.__create_temp_torrc__(socks_port)
         self.is_tor_started = False
 
-    def start_tor(self):
-        '''Starts a TOR subprocess listening on the specified socks_port.'''
+    def start(self):
+        '''
+        Starts a TOR subprocess listening on the specified socks_port
+        
+        Raises TorStartFailedException
+        '''
 
         if self.is_tor_started:
             return
@@ -50,8 +54,12 @@ class Tor:
             controller.authenticate(password=self.password)
             controller.signal(Signal.NEWNYM)
 
-    def stop_tor(self):
-        '''Kills TOR process if it is running.'''
+    def stop(self):
+        '''
+        Kills TOR process if it is running
+        
+        Raises TorDataDirectoryException
+        '''
 
         if not self.is_tor_started:
             return
@@ -67,9 +75,11 @@ class Tor:
 
     def get_external_address(self):
         '''
-        Returns the external IP address with the help of a random IP API.\n
-        Each time the method is called, a random API is chosen to retrieve the IP address.\n
-        The method checks whether an API is working or not, if it isn't then another one is chosen.
+        Returns the external IP address with the help of a random IP API
+
+        Each time the method is called, a random API is chosen to retrieve the IP address
+
+        The method checks whether an API is working or not, if it isn't then another one is chosen
         '''
 
         apis = [
@@ -109,8 +119,13 @@ class Tor:
     
     def __create_temp_torrc__(self, socks_port: int):
         '''
-        Creates a temporary torrc file inside the program's storage directory.\n
-        Also creates a temporary DataDirectory needed by TOR.\n
+        Creates a temporary torrc file inside the program's storage directory
+
+        Also creates a temporary DataDirectory needed by TOR
+
+        Raises TorHashingException
+
+        Raises TorDataDirectoryException
         '''
 
         DATA_DIR = f'/tmp/youtooler/{socks_port}'
