@@ -20,7 +20,7 @@
 
 - **Python** 3.10.x
 
-- **Firefox**
+- **Firefox ESR**
 
 - **Geckodriver**
 
@@ -29,6 +29,10 @@
 - **High speed** internet connection.
 
 ## Firefox Installation (Debian / Ubuntu)
+
+```bash
+sudo add-apt-repository ppa:mozillateam/ppa
+```
 
 ```bash
 sudo apt update
@@ -41,7 +45,7 @@ sudo apt install firefox-esr
 ## Geckodriver Installation (Debian / Ubuntu)
 
 ```bash
-wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+wget https://github.com/mozilla/geckodriver/releases/download/v0.31.0/geckodriver-v0.31.0-linux64.tar.gz
 ```
 
 ```bash
@@ -59,21 +63,17 @@ sudo mv geckodriver /usr/local/bin/
 ## TOR Installation (Debian / Ubuntu)
 
 ```bash
-sudo apt update
-```
-
-```bash
 sudo apt install tor
 ```
 
 ## Youtooler Installation (Linux)
 
 ```bash
-git clone --single-branch --branch python-latest https://github.com/Fraccs/youtooler.git
+git clone https://github.com/Fraccs/youtooler-python.git
 ```
 
 ```bash
-cd youtooler
+cd youtooler-python
 ```
 
 ```bash
