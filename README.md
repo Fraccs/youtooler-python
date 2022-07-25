@@ -1,7 +1,7 @@
 ![](https://img.shields.io/badge/platform-Ubuntu-orange)
 ![](https://img.shields.io/badge/python-3.10.x-yellow)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Fraccs/youtooler-python)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Fraccs/youtooler-python/youtooler)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Fraccs/youtooler-python/test)
 ![GitHub](https://img.shields.io/github/license/Fraccs/youtooler-python)
 ![GitHub issues](https://img.shields.io/github/issues/Fraccs/youtooler-python)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/Fraccs/youtooler-python)
