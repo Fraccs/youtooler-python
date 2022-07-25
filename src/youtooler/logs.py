@@ -1,5 +1,5 @@
 from colorama import Fore, Style
-from .helpers.exceptions import LogMessageException
+from .exceptions import LogMessageException
 
 def get_log_message(log: str, *args) -> str:
     '''

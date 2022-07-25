@@ -6,7 +6,7 @@ import requests
 import subprocess
 from stem import Signal
 from stem.control import Controller
-from .helpers.exceptions import TorHashingException, TorStartFailedException, TorDataDirectoryException
+from .exceptions import TorHashingException, TorStartFailedException, TorDataDirectoryException
 from .utils import get_secure_password
 
 class Tor:

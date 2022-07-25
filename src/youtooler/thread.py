@@ -4,7 +4,7 @@ from threading import Thread
 from .logs import get_log_message, get_error_message
 from .tor import Tor
 from .utils import stderr
-from .helpers.exceptions import TorStartFailedException
+from .exceptions import TorStartFailedException
 from .webdriver import YoutoolerWebdriver
 
 class YoutoolerThread(Thread):
