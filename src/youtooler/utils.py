@@ -4,7 +4,7 @@ import string_utils
 from argparse import ArgumentParser
 from bs4 import BeautifulSoup
 from sys import stderr
-from .helpers.exceptions import *
+from .exceptions import *
 
 def get_arguments():
     '''Returns a Namespace containing the cli args.'''
