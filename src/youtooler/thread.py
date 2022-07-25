@@ -1,9 +1,10 @@
 from random import uniform
 from time import sleep
 from threading import Thread
+from .logs import get_log_message, get_error_message
 from .tor import Tor
-from .utils import get_error_message, get_log_message, stderr
-from .helpers.exceptions import TorStartFailedException
+from .utils import stderr
+from .exceptions import TorStartFailedException
 from .webdriver import YoutoolerWebdriver
 
 class YoutoolerThread(Thread):

@@ -12,7 +12,7 @@ jobs:
       # Automated release based on setup.cfg version tag
       - name: Automated releasing
         run: |
-          VERSION="$(grep -o '[0-9]\.[0-9]\.[0-9]' setup.py)"
+          VERSION="v$(grep -o '[0-9]\.[0-9]\.[0-9]' setup.cfg)"
           gh release create $VERSION -t $VERSION --target main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

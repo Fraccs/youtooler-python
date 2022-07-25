@@ -3,8 +3,9 @@ import shutil
 import os
 from colorama import Fore, Back, Style
 from sys import stderr
-from youtooler.thread import YoutoolerThread
-from youtooler.utils import get_video_duration, get_error_message
+from .logs import get_error_message
+from .thread import YoutoolerThread
+from .utils import get_video_duration
 
 class Youtooler:
     def __init__(self):
@@ -25,8 +26,8 @@ class Youtooler:
 
     def start(self, url: str):
         '''
-        Starts 5 threads with one TOR subprocess each.
-        Default socks_ports: 9050, 9052, 9054, 9056, 9058.
+        Starts 5 threads with one TOR subprocess each
+        Default socks_ports: 9050, 9052, 9054, 9056, 9058
         '''
 
         video_duration = get_video_duration(url)
@@ -40,7 +41,7 @@ class Youtooler:
 
     def stop(self):
         '''
-        Stops the execution of the threads and their subprocesses.
+        Stops the execution of the threads and their subprocesses
         '''
         try:
             for thread in self.threads:
@@ -52,7 +53,7 @@ class Youtooler:
 
     def __clean__(self):
         '''
-        Removes the temporary storage directory and its subdirectories.
+        Removes the temporary storage directory and its subdirectories
         '''
 
         try:
@@ -62,7 +63,7 @@ class Youtooler:
 
     def __create_storage_dir__(self) -> str:
         '''
-        Creates the temporary storage directory of the program ('/tmp/youtooler') and returns its path.
+        Creates the temporary storage directory of the program ('/tmp/youtooler') and returns its path
         '''
 
         STORAGE_DIR = '/tmp/youtooler'
