@@ -1,5 +1,5 @@
 import os
-from src.youtooler.app import *
+from youtooler.app import *
 
 class TestYoutooler:
     def test_storage_dir(self):
