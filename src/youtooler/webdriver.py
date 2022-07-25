@@ -1,7 +1,8 @@
 from random import randint
 from selenium.common.exceptions import *
 from selenium.webdriver import Firefox, DesiredCapabilities
-from .utils import get_log_message, get_warning_message, get_video_title, stderr
+from .logs import get_warning_message, get_log_message
+from .utils import get_video_title, stderr
 from .tor import Tor
 
 class YoutoolerWebdriver(Firefox):
