@@ -3,7 +3,7 @@ from time import sleep
 from threading import Thread
 from .logs import get_log_message, get_error_message
 from .tor import Tor
-from .utils import stderr
+from .utils import get_secure_password, stderr
 from .exceptions import TorStartFailedException
 from .webdriver import YoutoolerWebdriver
 
@@ -17,12 +17,13 @@ class YoutoolerThread(Thread):
     def __init__(self, url: str, video_duration: int, socks_port: int):
         Thread.__init__(self)
         self.socks_port = socks_port
+        self.control_port = socks_port + 1
         self.url = url
         self.video_duration = video_duration
 
     def run(self):
         # TOR startup
-        tor = Tor(self.socks_port)
+        tor = Tor(self.socks_port, self.control_port, get_secure_password())
 
         try:
             tor.start()
