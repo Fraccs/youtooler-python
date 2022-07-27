@@ -3,9 +3,9 @@ from youtooler.logs import get_error_message
 from youtooler import utils
 
 def main():
-    app = Youtooler()
-    app.print_logo()
+    utils.print_logo()
 
+    app = Youtooler()
     args = utils.get_arguments() # Parsing CLI args
 
     if utils.verify_youtube_url(args.url):
