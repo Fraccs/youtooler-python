@@ -7,33 +7,31 @@ from .thread import YoutoolerThread
 from .utils import get_video_duration
 
 class Youtooler:
-    def __init__(self):
-        self.__exit_handler = atexit.register(self.stop)
-        self.__storage_dir = self.__create_storage_dir__()
-        self.socks_ports = [9050, 9052, 9054, 9056, 9058]
-        self.threads = []
+    def __init__(self, url: str, level: int):
+        self.__storage_directory_path = self.__create_storage_dir__()
+        self.__threads = []
+        self.level = level
+        self.url = url
 
-    def start(self, url: str):
-        '''
-        Starts 5 threads with one TOR subprocess each
-        Default socks_ports: 9050, 9052, 9054, 9056, 9058
-        '''
+    def start(self):
+        video_duration = get_video_duration(self.url)
+        ports = [9050, 9052, 9054, 9056, 9058, 9060, 9062, 9064, 9066, 9068]
 
-        video_duration = get_video_duration(url)
-
-        for port in self.socks_ports:
-            self.threads.append(YoutoolerThread(url, video_duration, port))
+        for i in range(self.level):
+            self.__threads.append(YoutoolerThread(self.url, video_duration, ports[i]))
         
-        for thread in self.threads:
+        for thread in self.__threads:
             thread.setDaemon(True)
             thread.start()
+        
+        atexit.register(self.stop)
 
     def stop(self):
         '''
         Stops the execution of the threads and their subprocesses
         '''
         try:
-            for thread in self.threads:
+            for thread in self.__threads:
                 thread.join()
         except AttributeError:
             pass
@@ -46,7 +44,7 @@ class Youtooler:
         '''
 
         try:
-            shutil.rmtree('/tmp/youtooler')
+            shutil.rmtree(self.__storage_directory_path)
         except OSError:
             pass
 
