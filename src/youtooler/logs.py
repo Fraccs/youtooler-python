@@ -54,9 +54,10 @@ def get_error_message(err: str, *args) -> str:
 
     error_messages = {
         'DATA-NOT-CREATED': 'Could not create the data directory, run the program again',
-        'INVALID-URL': 'The passed url is not valid',
+        'LEVEL-NOT-VALID': 'The passed level is not valid',
         'STORAGE-NOT-CREATED': 'Could not create the storage directory, run the program again',
-        'TOR-NOT-STARTED': 'Failed while starting TOR on SocksPort {}, ControlPort {}'
+        'TOR-NOT-STARTED': 'Could not start TOR on SocksPort {}, ControlPort {}',
+        'URL-NOT-VALID': 'The passed url is not valid'
     }
 
     if error_messages.get(err) is None:
