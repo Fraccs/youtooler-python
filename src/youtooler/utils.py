@@ -1,7 +1,6 @@
 import isodate
 import requests
 import string_utils
-from argparse import ArgumentParser
 from bs4 import BeautifulSoup
 from colorama import Fore, Back, Style
 from sys import stderr
@@ -16,16 +15,6 @@ def print_logo():
     print(f'{Fore.YELLOW}  ()          \\\\----------/ ______|\\____/|____/ {Fore.CYAN}|____| \\____/ \\____/|____/{Fore.YELLOW}\\___  >__|---------------\\   ')
     print(f'{Fore.YELLOW}               \\>         \\/                                      {Fore.YELLOW}            \\/       ')
     print(f'\n{Fore.WHITE}{Back.RED}Developers assume no liability and are not responsible for any misuse or damage caused by this program.{Style.RESET_ALL}')
-
-def get_arguments():
-    '''
-    Returns a Namespace containing the cli arguments passed when the program was run
-    '''
-    
-    parser = ArgumentParser(description='YouTube auto-viewer BOT based on TOR.')
-    parser.add_argument('-u', '--url', help='The url of the target YouTube video.', required=True)
-
-    return parser.parse_args()
 
 def get_secure_password(length: int=20) -> str:
     '''
