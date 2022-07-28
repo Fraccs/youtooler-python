@@ -28,8 +28,8 @@ class Youtooler:
     def start(self) -> None:
         video_duration = get_video_duration(self.url)
 
-        for port in self.socks_ports:
-            self.threads.append(YoutoolerThread(self.url, video_duration, port))
+        for i in range(len(self.socks_ports)):
+            self.threads.append(YoutoolerThread(self.url, video_duration, self.socks_ports[i], self.control_ports[i]))
         
         for thread in self.threads:
             thread.setDaemon(True)

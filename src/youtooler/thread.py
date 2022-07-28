@@ -14,10 +14,10 @@ class YoutoolerThread(Thread):
     Takes the target YouTube url and the socks_port for TOR as parameters.
     '''
 
-    def __init__(self, url: str, video_duration: int, socks_port: int):
+    def __init__(self, url: str, video_duration: int, socks_port: int, control_port: int):
         Thread.__init__(self)
         self.socks_port = socks_port
-        self.control_port = socks_port + 1
+        self.control_port = control_port
         self.url = url
         self.video_duration = video_duration
 
