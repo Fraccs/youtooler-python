@@ -88,14 +88,12 @@ pip install .
 
 ## Usage
 
-> The program binds 5 TOR subprocesses to the ports: ```9050, 9052, 9054, 9056, 9058```, make sure that nothing else is running on those ports.
-
-> Make sure that the URL is in the correct format: ```https://www.youtube.com/watch?v=<video_id>```
-
 ```bash
 cd src
 ```
 
 ```bash
-python3 youtooler.py --url <url_of_video>
+python3 youtooler.py <url_of_video> [--level <level>]
 ```
+
+> Make sure that the URL is in the correct format: ```https://www.youtube.com/watch?v=<video_id>```
