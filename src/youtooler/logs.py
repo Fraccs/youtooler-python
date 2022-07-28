@@ -3,14 +3,16 @@ from .exceptions import LogMessageException
 
 def get_log_message(log: str, *args) -> str:
     '''
-    Returns the log message corresponding to the passed log code.
+    Returns the log message corresponding to the passed log code
     
-    Raises LogMessageException
+    Raises:
+    - LogMessageException
     '''
 
     log_messages = {
-        'TOR-STARTED': 'Started TOR on SocksPort {}, ControlPort {}',
         'REQUEST-SUCCESSFUL': 'Successful request made by {} | Tor IP: {}',
+        'STORAGE-CREATED': 'Successfully created the storage directory',
+        'TOR-STARTED': 'Started TOR on SocksPort {}, ControlPort {}',
         'VIDEO-STARTED': '{} started successfully'
     }
 
@@ -24,9 +26,10 @@ def get_log_message(log: str, *args) -> str:
 
 def get_warning_message(warn: str, *args) -> str:
     '''
-    Returns the warning message corresponding to the passed warning code.
+    Returns the warning message corresponding to the passed warning code
     
-    Raises LogMessageException
+    Raises:
+    - LogMessageException
     '''
 
     warning_messages = {
@@ -46,17 +49,18 @@ def get_warning_message(warn: str, *args) -> str:
 
 def get_error_message(err: str, *args) -> str:
     '''
-    Returns the error message corresponding to the passed error code.
+    Returns the error message corresponding to the passed error code
     
-    Raises LogMessageException
+    Raises:
+    - LogMessageException
     '''
 
     error_messages = {
-        'INVALID-URL': 'The passed url is not valid',
-        'STORAGE-DIR-CREATE': 'Could not create the storage directory run the program again',
-        'DARA-DIR-CREATE': 'Could not create the data directory run the program again',
-        'STORAGE-DIR-REMOVE': 'Could not remove the storage directory',
-        'TOR-NOT-STARTED': 'Failed while starting TOR on SocksPort {}, ControlPort {}'
+        'DATA-NOT-CREATED': 'Could not create the data directory, run the program again',
+        'LEVEL-NOT-VALID': 'The passed level is not valid',
+        'STORAGE-NOT-CREATED': 'Could not create the storage directory, run the program again',
+        'TOR-NOT-STARTED': 'Could not start TOR on SocksPort {}, ControlPort {}',
+        'URL-NOT-VALID': 'The passed url is not valid'
     }
 
     if error_messages.get(err) is None:

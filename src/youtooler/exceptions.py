@@ -2,8 +2,16 @@ class DurationUnestablishedException(Exception):
     '''Raised if the duration of a video couldn't be established'''
     pass
 
+class LevelNotInRange(Exception):
+    '''Raised if level is not in the range 1..10'''
+    pass
+
 class LogMessageException(Exception):
-    '''Raised if an error message that doesn't exist is requested'''
+    '''Raised if a log/warning/error message that doesn't exist is requested'''
+    pass
+
+class InvalidUrl(Exception):
+    '''Raised if the video's url is not valid'''
     pass
 
 class TorDataDirectoryException(Exception):
@@ -15,7 +23,7 @@ class TorHashingException(Exception):
     pass
 
 class TorStartFailedException(Exception):
-    '''Raised if TOR fails during startup'''
+    '''Raised if TOR fails to startup'''
     pass
 
 class UnsecureLength(Exception):

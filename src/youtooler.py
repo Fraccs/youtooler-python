@@ -1,17 +1,25 @@
 from youtooler.app import Youtooler
+from youtooler.exceptions import InvalidUrl, LevelNotInRange
 from youtooler.logs import get_error_message
-from youtooler import utils
+from youtooler.parser import YoutoolerParser
+from youtooler.utils import print_logo, stderr
 
 def main():
-    app = Youtooler()
-    app.print_logo()
+    print_logo()
 
-    args = utils.get_arguments() # Parsing CLI args
-
-    if utils.verify_youtube_url(args.url):
-        app.start(args.url)
-    else:
-        print(get_error_message('INVALID-URL'), file=utils.stderr)
+    parser = YoutoolerParser()
+    
+    try:
+        args = parser.parse()
+    except InvalidUrl:
+        print(get_error_message('URL-NOT-VALID'), file=stderr)
+        exit()
+    except LevelNotInRange:
+        print(get_error_message('LEVEL-NOT-VALID'), file=stderr)
+        exit()
+    
+    app = Youtooler(**args)
+    app.start()
 
 if __name__ == '__main__':
     main()
