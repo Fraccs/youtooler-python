@@ -6,21 +6,25 @@ from .logs import get_error_message, get_log_message
 from .thread import YoutoolerThread
 from .utils import get_video_duration
 
+SOCKS_PORT = 9150
+CONTROL_PORT = 9151
+
 class Youtooler:
     def __init__(self, url: str, level: int):
         self.__storage_directory_path = self.__create_storage_dir__()
-        self.__threads = []
+        self.threads = []
         self.level = level
         self.url = url
+        self.socks_ports = [port for port in range(SOCKS_PORT, SOCKS_PORT + (level * 2), 2)]
+        self.control_ports = [port for port in range(CONTROL_PORT, CONTROL_PORT + (level * 2), 2)]
 
     def start(self):
         video_duration = get_video_duration(self.url)
-        ports = [9050, 9052, 9054, 9056, 9058, 9060, 9062, 9064, 9066, 9068]
 
-        for i in range(self.level):
-            self.__threads.append(YoutoolerThread(self.url, video_duration, ports[i]))
+        for port in self.socks_ports:
+            self.threads.append(YoutoolerThread(self.url, video_duration, port))
         
-        for thread in self.__threads:
+        for thread in self.threads:
             thread.setDaemon(True)
             thread.start()
         
@@ -31,7 +35,7 @@ class Youtooler:
         Stops the execution of the threads and their subprocesses
         '''
         try:
-            for thread in self.__threads:
+            for thread in self.threads:
                 thread.join()
         except AttributeError:
             pass
