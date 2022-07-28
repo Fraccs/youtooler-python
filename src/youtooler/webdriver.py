@@ -19,7 +19,7 @@ class YoutoolerWebdriver(Firefox):
         }
         
         # Firefox startup
-        Firefox.__init__(capabilities=firefox_capabilities)
+        super().__init__(capabilities=firefox_capabilities)
         self.set_window_size(500, 300)
 
     def require_video(self, url: str, video_duration: int) -> None:
