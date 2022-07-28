@@ -19,7 +19,7 @@ class YoutoolerWebdriver(Firefox):
         }
         
         # Firefox startup
-        super().__init__(capabilities=firefox_capabilities)
+        Firefox.__init__(capabilities=firefox_capabilities)
         self.set_window_size(500, 300)
 
     def require_video(self, url: str, video_duration: int) -> None:
@@ -36,7 +36,10 @@ class YoutoolerWebdriver(Firefox):
 
         for button in cookie_buttons:
             if button.text == 'ACCEPT ALL':
-                button.click()
+                try:
+                    button.click()
+                except StaleElementReferenceException:
+                    print(get_warning_message('PLAY-BTN-UNREACHABLE'), file=stderr)
 
     def start_video(self, url: str) -> None:
         try:
