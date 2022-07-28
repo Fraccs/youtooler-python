@@ -28,9 +28,10 @@ class Tor:
 
     def start(self) -> None:
         '''
-        Starts TOR listening on SOCKS_PORT and CONTROL_PORT
+        Starts a TOR process listening on self.socks_port and self.control_port
         
-        Raises TorStartFailedException
+        Raises:
+        - TorStartFailedException
         '''
 
         COMMAND = ['tor', '-f', self.torrc_path]
@@ -40,8 +41,7 @@ class Tor:
 
         self.tor_process = Popen(COMMAND, stdout=PIPE, stderr=PIPE)
         
-        # Waiting for TOR to start
-        try:
+        try: # Waiting for TOR to start
             for line in self.tor_process.stdout:
                 if b'100%' in line:
                     self.is_tor_started = True
@@ -49,12 +49,13 @@ class Tor:
         except TypeError: # Catching iteration of NoneType
             pass
 
-        # TOR could not start
-        if not self.is_tor_started:
+        if not self.is_tor_started: # TOR could not start
             raise TorStartFailedException
 
     def renew_circuit(self) -> None:
-        '''Sends NEWNYM signal to the TOR control port in order to renew the circuit'''
+        '''
+        Renew the TOR circuit
+        '''
 
         if not self.is_tor_started:
             return
@@ -65,9 +66,10 @@ class Tor:
 
     def stop(self) -> None:
         '''
-        Kills TOR if it is running
+        Kills TOR
         
-        Raises TorDataDirectoryException
+        Raises:
+        - TorDataDirectoryException
         '''
 
         if not self.is_tor_started:
@@ -75,16 +77,11 @@ class Tor:
 
         self.tor_process.terminate()
 
-        try: # Removing the data directory
-            shutil.rmtree(f'/tmp/youtooler/{self.socks_port}', ignore_errors=True)
-        except OSError:
-            raise TorDataDirectoryException
-
         self.is_tor_started = False
 
     def get_external_address(self) -> str:
         '''
-        Returns the current TOR IP
+        Returns the IP address of the current circuit's exit node
         '''
 
         apis = [
@@ -122,9 +119,10 @@ class Tor:
     
     def __hash_password__(self) -> str:
         '''
-        Returns TOR hashed self.password
+        Returns TOR hashed password
 
-        Raises TorHashingException
+        Raises:
+        - TorHashingException
         '''
 
         COMMAND = ['tor', '--hash-password', self.password]
@@ -141,9 +139,10 @@ class Tor:
 
     def __create_data_directory__(self) -> str:
         '''
-        Creates a temporary tor DataDirectory
+        Creates a temporary TOR DataDirectory
 
-        Raises TorDataDirectoryException
+        Raises:
+        - TorDataDirectoryException
         '''
 
         PATH = f'/tmp/youtooler/{self.socks_port}'
