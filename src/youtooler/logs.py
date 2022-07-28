@@ -5,7 +5,8 @@ def get_log_message(log: str, *args) -> str:
     '''
     Returns the log message corresponding to the passed log code
     
-    Raises LogMessageException
+    Raises:
+    - LogMessageException
     '''
 
     log_messages = {
@@ -27,7 +28,8 @@ def get_warning_message(warn: str, *args) -> str:
     '''
     Returns the warning message corresponding to the passed warning code
     
-    Raises LogMessageException
+    Raises:
+    - LogMessageException
     '''
 
     warning_messages = {
@@ -49,7 +51,8 @@ def get_error_message(err: str, *args) -> str:
     '''
     Returns the error message corresponding to the passed error code
     
-    Raises LogMessageException
+    Raises:
+    - LogMessageException
     '''
 
     error_messages = {

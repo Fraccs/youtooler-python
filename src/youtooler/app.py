@@ -8,6 +8,14 @@ from .thread import YoutoolerThread
 from .utils import get_video_duration
 
 class Youtooler:
+    '''
+    Entrypoint of the app, the args should be passed as an unpacked dict
+
+    Args:
+    - url: str (The url of the video)
+    - level: int (The number of threads to start)
+    '''
+
     SOCKS_PORT = 9150
     CONTROL_PORT = 9151
     PATH = '/tmp/youtooler'
@@ -26,6 +34,8 @@ class Youtooler:
         self.__create_storage_dir__()
 
     def start(self) -> None:
+        '''Starts the application'''
+
         video_duration = get_video_duration(self.url)
 
         for i in range(len(self.socks_ports)):
@@ -36,9 +46,7 @@ class Youtooler:
             thread.start()
 
     def __clean__(self, *args) -> None:
-        '''
-        Removes the temporary storage directory and its subdirectories
-        '''
+        '''Removes the app's storage directory'''
 
         try:
             for thread in self.threads:
@@ -52,9 +60,7 @@ class Youtooler:
             pass
 
     def __create_storage_dir__(self) -> None:
-        '''
-        Creates the temporary storage directory of the program ('/tmp/youtooler') and returns its path
-        '''
+        '''Creates the app's storage directory and returns its path'''
 
         try:
             os.mkdir(self.PATH)
