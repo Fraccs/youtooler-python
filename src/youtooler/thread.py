@@ -9,9 +9,13 @@ from .webdriver import YoutoolerWebdriver
 
 class YoutoolerThread(Thread):
     '''
-    Extends threading.Thread
+    Responsible for starting both the Webdriver and TOR
 
-    Takes the target YouTube url and the socks_port for TOR as parameters.
+    Args:
+    - url: str (The url of the video)
+    - video_duration: int (The duration of the video)
+    - socks_port: int (The port to assign as SocksPort to TOR)
+    - control_port: int (The port to assign as ControlPort to TOR)
     '''
 
     def __init__(self, url: str, video_duration: int, socks_port: int, control_port: int):
@@ -21,7 +25,7 @@ class YoutoolerThread(Thread):
         self.url = url
         self.video_duration = video_duration
 
-    def run(self):
+    def run(self) -> None:
         # TOR startup
         tor = Tor(self.socks_port, self.control_port, get_secure_password())
 

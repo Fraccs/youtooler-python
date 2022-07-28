@@ -7,11 +7,11 @@ class LevelNotInRange(Exception):
     pass
 
 class LogMessageException(Exception):
-    '''Raised if an error message that doesn't exist is requested'''
+    '''Raised if a log/warning/error message that doesn't exist is requested'''
     pass
 
 class InvalidUrl(Exception):
-    '''Raised if the url is not valid'''
+    '''Raised if the video's url is not valid'''
     pass
 
 class TorDataDirectoryException(Exception):
@@ -23,7 +23,7 @@ class TorHashingException(Exception):
     pass
 
 class TorStartFailedException(Exception):
-    '''Raised if TOR fails during startup'''
+    '''Raised if TOR fails to startup'''
     pass
 
 class UnsecureLength(Exception):
