@@ -1,5 +1,4 @@
 import os
-import shutil
 import re
 import requests
 from stem import Signal
@@ -53,9 +52,7 @@ class Tor:
             raise TorStartFailedException
 
     def renew_circuit(self) -> None:
-        '''
-        Renew the TOR circuit
-        '''
+        '''Renew the TOR circuit'''
 
         if not self.is_tor_started:
             return
@@ -80,9 +77,7 @@ class Tor:
         self.is_tor_started = False
 
     def get_external_address(self) -> str:
-        '''
-        Returns the IP address of the current circuit's exit node
-        '''
+        '''Returns the IP address of the current circuit's exit node'''
 
         apis = [
             'https://api.ipify.org',
@@ -155,9 +150,7 @@ class Tor:
         return PATH
 
     def __create_torrc__(self) -> str:
-        '''
-        Creates a temporary torrc file inside the program's storage directory
-        '''
+        '''Creates a temporary torrc file inside the program's storage directory'''
 
         PATH = f'/tmp/youtooler/torrc.{self.socks_port}'
 
