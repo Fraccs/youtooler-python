@@ -20,8 +20,6 @@
 
 ---
 
-<a name="disclaimer"></a>
-
 ## Disclaimer
 
 ***Developers assume no liability and are NOT RESPONSIBLE for any misuse or damage caused by this program.***
@@ -29,8 +27,6 @@
 ***This is just an experiment, the usage of this program is NOT RECCOMENDED.***
 
 ---
-
-<a name="requirements"></a>
 
 ## Requirements
 
@@ -47,8 +43,6 @@
 - **High speed** internet connection.
 
 ---
-
-<a name="installation"></a>
 
 ## Installation
 
@@ -110,8 +104,6 @@ pip install .
 
 ---
 
-<a name="usage"></a>
-
 ## Usage
 
 ```bash
@@ -130,11 +122,7 @@ python3 youtooler.py <url> [--level <level>]
 - Optionals
   - --level: int (The number of threads to start)
 
-> Make sure that the URL is in the correct format: ```https://www.youtube.com/watch?v=<video_id>```
-
 ---
-
-<a name="contribute"></a>
 
 ## Contribute
 
@@ -146,7 +134,7 @@ python3 youtooler.py <url> [--level <level>]
 
 Before creating a new feature/bugfix a <a href="https://github.com/Fraccs/youtooler-python/issues">related issue should be opened</a>.
 
-The branch name should follow the pattern: ```<issue_id>-<branch_type>-<branch_name>``` where *issue_id* is the number that identifies the previously opened issue (i.e. 29), *branch_type* is a short descriptor of what kind of feature/bugfix the branch is about and should be either feat|fix|docs and *branch_name* is a short descriptive name of the branch.
+The branch name should follow the pattern: ```<issue_id>-<branch_type>-<branch_name>``` where ***issue_id*** is the number that identifies the previously opened issue (i.e. 29), ***branch_type*** is a short descriptor of what kind of feature/bugfix the branch is about and should be either ```feat|fix|docs|refactor|test``` and ***branch_name*** is a short descriptive name of the branch.
 
 ***An example feature workflow would look like this:***
 
@@ -154,7 +142,7 @@ The branch name should follow the pattern: ```<issue_id>-<branch_type>-<branch_n
 
 2. Start a new feature: ```git flow feature start <issue_id>-<branch_type>-<feature_name>```.
 
-3. Commit your code following the commit convention to build the commit message.
+3. Commit your code following the <a href="#commit-convention">commit convention</a> to build the commit message.
 
 4. Push the feature to your remote: ```git flow feature publish <issue_id>-<branch_type>-<feature_name>```
 
