@@ -188,5 +188,3 @@ FOOTER:
 
 The footer can contain information about GitHub issues and other PRs that this commit closes or is related to.
 ```
-
-> If the type of commit is test, the scope should only be the name of the module that is being tested and not test_<module_name>.
