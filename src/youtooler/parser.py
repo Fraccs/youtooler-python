@@ -10,13 +10,13 @@ class YoutoolerParser(ArgumentParser):
         self.add_argument('url', type=str, help='The url of the target YouTube video')
         self.add_argument('-l', '--level', type=int, default=5, help='The number of concurrent browsers to start', required=False)
 
-    def parse(self) -> dict:
+    def parse(self, args: list[str]) -> dict:
         '''Returns a dict containing cli args'''
 
-        args = vars(self.parse_args())
-        self.__check_values__(args)
+        args_dict = vars(self.parse_args(args))
+        self.__check_values__(args_dict)
         
-        return args
+        return args_dict
 
     def __check_values__(self, args: dict) -> None:
         '''
