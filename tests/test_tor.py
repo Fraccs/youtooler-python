@@ -5,8 +5,11 @@ import shutil
 from youtooler.tor import Tor
 
 class TestTor:
-    os.mkdir('/tmp/youtooler') # Temporary storage directory
-    tor = Tor(9150, 9151, 'test_password_123')
+    TEST_DIRECTORY = '/tmp/youtooler_test'
+    
+    os.mkdir(TEST_DIRECTORY) # Temporary storage directory
+    
+    tor = Tor(9150, 9151, 'test_password_123', TEST_DIRECTORY)
 
     def test_tor_default(self) -> None:
         assert re.match('^16:[0-9A-F]{58}$', self.tor.hashed_password)
@@ -37,4 +40,4 @@ class TestTor:
 
         assert self.tor.is_tor_started == False
 
-        shutil.rmtree('/tmp/youtooler')
+        shutil.rmtree(self.TEST_DIRECTORY)
