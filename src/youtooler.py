@@ -1,3 +1,4 @@
+import sys
 from youtooler.app import Youtooler
 from youtooler.exceptions import InvalidUrl, LevelNotInRange
 from youtooler.logs import get_error_message
@@ -10,7 +11,7 @@ def main():
     parser = YoutoolerParser()
     
     try:
-        args = parser.parse()
+        args = parser.parse(sys.argv[1:])
     except InvalidUrl:
         print(get_error_message('URL-NOT-VALID'), file=stderr)
         exit()
