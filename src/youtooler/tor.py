@@ -14,12 +14,14 @@ class Tor:
     - socks_port: int (TOR SocksPort)
     - control_port: int (TOR ControlPort)
     - password: str (Password for TOR ControlPort)
+    - storage_directory: str (TOR storage directory without the slash at the end)
     '''
 
-    def __init__(self, socks_port: int, control_port: int, password: str):
+    def __init__(self, socks_port: int, control_port: int, password: str, storage_directory: str):
         self.socks_port = socks_port
         self.control_port = control_port
         self.password = password
+        self.storage_directory_path = storage_directory
         self.is_tor_started = False
         self.hashed_password = self.__hash_password__()
         self.data_directory_path = self.__create_data_directory__()
@@ -140,7 +142,7 @@ class Tor:
         - TorDataDirectoryException
         '''
 
-        PATH = f'/tmp/youtooler/{self.socks_port}'
+        PATH = f'{self.storage_directory_path}/{self.socks_port}'
 
         try:
             os.mkdir(PATH)
@@ -152,7 +154,7 @@ class Tor:
     def __create_torrc__(self) -> str:
         '''Creates a temporary torrc file inside the program's storage directory'''
 
-        PATH = f'/tmp/youtooler/torrc.{self.socks_port}'
+        PATH = f'{self.storage_directory_path}/torrc.{self.socks_port}'
 
         with open(PATH, 'w') as torrc:
             torrc.write(f'SocksPort {self.socks_port}\n')
