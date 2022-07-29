@@ -27,7 +27,7 @@ class YoutoolerThread(Thread):
 
     def run(self) -> None:
         # TOR startup
-        tor = Tor(self.socks_port, self.control_port, get_secure_password())
+        tor = Tor(self.socks_port, self.control_port, get_secure_password(), '/tmp/youtooler')
 
         try:
             tor.start()
