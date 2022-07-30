@@ -3,9 +3,12 @@ import shutil
 import os
 import signal
 from sys import stderr
+
 from .logs import get_error_message, get_log_message
 from .thread import YoutoolerThread
-from .utils import get_video_duration
+from .tor import Tor
+from .utils import get_secure_password, get_video_duration
+from .webdriver import YoutoolerWebdriver
 
 class Youtooler:
     '''
@@ -16,54 +19,62 @@ class Youtooler:
     - level: int (The number of threads to start)
     '''
 
-    SOCKS_PORT = 9150
-    CONTROL_PORT = 9151
-    PATH = '/tmp/youtooler'
+    __BASE_SOCKS_PORT = 9150
+    __BASE_CONTROL_PORT = 9151
+    __STORAGE_DIRECTORY_PATH = '/tmp/youtooler'
 
     def __init__(self, url: str, level: int):
-        # Register cleanup handlers
-        signal.signal(signal.SIGINT, self.__clean__)
-        signal.signal(signal.SIGTERM, self.__clean__)
-        atexit.register(self.__clean__)
-
-        self.threads = []
-        self.level = level
         self.url = url
-        self.socks_ports = [port for port in range(self.SOCKS_PORT, self.SOCKS_PORT + (level * 2), 2)]
-        self.control_ports = [port for port in range(self.CONTROL_PORT, self.CONTROL_PORT + (level * 2), 2)]
-        self.__create_storage_dir__()
+        self.level = level
 
-    def start(self) -> None:
+        self.__threads: list[YoutoolerThread] = []
+        self.__SOCKS_PORTS = [port for port in range(self.__BASE_SOCKS_PORT, self.__BASE_SOCKS_PORT + (level * 2), 2)]
+        self.__CONTROL_PORTS = [port for port in range(self.__BASE_CONTROL_PORT, self.__BASE_CONTROL_PORT + (level * 2), 2)]
+        self.__PORT_RANGE = [(self.__SOCKS_PORTS[i], self.__CONTROL_PORTS[i]) for i in range(len(self.__SOCKS_PORTS))]
+
+        self.__start()
+
+    def __start(self) -> None:
         '''Starts the application'''
 
-        video_duration = get_video_duration(self.url)
+        # Register cleanup handlers
+        signal.signal(signal.SIGINT, self.__clean)
+        signal.signal(signal.SIGTERM, self.__clean)
+        atexit.register(self.__clean)
 
-        for i in range(len(self.socks_ports)):
-            self.threads.append(YoutoolerThread(self.url, video_duration, self.socks_ports[i], self.control_ports[i]))
+        self.__create_storage_dir()
+
+        for (socks_port, control_port) in self.__PORT_RANGE:
+            tor = Tor(socks_port, control_port, get_secure_password(), self.__STORAGE_DIRECTORY_PATH)
+            webdriver = YoutoolerWebdriver(self.url, get_video_duration(self.url))
+
+            self.__threads.append(YoutoolerThread(webdriver, tor))
         
-        for thread in self.threads:
-            thread.setDaemon(True)
+        for thread in self.__threads:
+            thread.daemon = True
             thread.start()
 
-    def __clean__(self, *args) -> None:
+    def __clean(self, *args) -> None:
         '''Removes the app's storage directory'''
 
         try:
-            for thread in self.threads:
+            for thread in self.__threads:
+                thread.webdriver.stop_client()
+                thread.tor.stop()
                 thread.join()
         except AttributeError:
             pass
 
         try:
-            shutil.rmtree(self.PATH)
+            shutil.rmtree(self.__STORAGE_DIRECTORY_PATH)
         except OSError:
             pass
 
-    def __create_storage_dir__(self) -> None:
+    def __create_storage_dir(self) -> None:
         '''Creates the app's storage directory and returns its path'''
 
         try:
-            os.mkdir(self.PATH)
+            os.mkdir(self.__STORAGE_DIRECTORY_PATH)
         except FileExistsError:
             print(get_error_message('STORAGE-NOT-CREATED'), file=stderr)
             exit()
