@@ -47,6 +47,7 @@ class Youtooler:
         for (socks_port, control_port) in self.__PORT_RANGE:
             tor = Tor(socks_port, control_port, get_secure_password(), self.__STORAGE_DIRECTORY_PATH)
             webdriver = YoutoolerWebdriver(self.url, get_video_duration(self.url))
+            webdriver.set_socks_proxy(port=socks_port)
 
             self.__threads.append(YoutoolerThread(webdriver, tor))
         
