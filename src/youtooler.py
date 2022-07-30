@@ -19,8 +19,7 @@ def main():
         print(get_error_message('LEVEL-NOT-VALID'), file=stderr)
         exit()
     
-    app = Youtooler(**args)
-    app.start()
+    Youtooler(**args)
 
 if __name__ == '__main__':
     main()
