@@ -14,6 +14,7 @@ class YoutoolerThread(Thread):
 
     Args:
     - webdriver: YoutoolerWebdriver (YoutoolerWebdriver object)
+    - tor: Tor (Tor object)
     '''
 
     def __init__(self, webdriver: YoutoolerWebdriver, tor: Tor):
