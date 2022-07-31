@@ -1,6 +1,6 @@
 from random import randint
 from selenium.common.exceptions import *
-from selenium.webdriver import Firefox, DesiredCapabilities
+from selenium.webdriver import Firefox, DesiredCapabilities, FirefoxOptions
 
 from .logs import get_warning_message, get_log_message
 from .utils import get_video_title, stderr
@@ -36,8 +36,11 @@ class YoutoolerWebdriver(Firefox):
     def start(self) -> None:
         '''Starts the Webdriver'''
 
+        options = FirefoxOptions()
+        options.headless = True
+
         # Firefox startup
-        super().__init__()
+        super().__init__(options=options)
         self.set_window_size(self.width, self.height)
 
     def require_video(self) -> None:
