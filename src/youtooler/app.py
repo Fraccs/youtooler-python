@@ -53,7 +53,6 @@ class Youtooler:
             self.__threads.append(YoutoolerThread(webdriver, tor))
         
         for thread in self.__threads:
-            thread.daemon = True
             thread.start()
 
     def __clean(self, *args) -> None:
@@ -61,9 +60,8 @@ class Youtooler:
 
         try:
             for thread in self.__threads:
-                thread.webdriver.stop_client()
+                thread.webdriver.quit()
                 thread.tor.stop()
-                thread.join()
         except AttributeError:
             pass
 
