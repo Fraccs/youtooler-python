@@ -18,7 +18,8 @@ class YoutoolerWebdriver(Firefox):
     - height: int=300 (The height of the Firefox window)
     '''
 
-    def __init__(self, url: str, video_duration: int, width: int=500, height: int=300):
+    def __init__(self, headless: bool, url: str, video_duration: int, width: int=500, height: int=300):
+        self.headless = headless
         self.url = url
         self.video_duration = video_duration
         self.width = width
@@ -35,9 +36,10 @@ class YoutoolerWebdriver(Firefox):
 
     def start(self) -> None:
         '''Starts the Webdriver'''
-
         options = FirefoxOptions()
-        options.headless = True
+
+        if not self.headless:
+            options.headless = True
 
         # Firefox startup
         super().__init__(options=options)

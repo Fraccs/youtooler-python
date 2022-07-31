@@ -1,4 +1,4 @@
-from argparse import ArgumentParser
+from argparse import ArgumentParser, BooleanOptionalAction
 from .exceptions import InvalidUrl, LevelNotInRange
 from .utils import verify_youtube_url
 
@@ -8,6 +8,7 @@ class YoutoolerParser(ArgumentParser):
     def __init__(self):
         ArgumentParser.__init__(self, description='YouTube viewer BOT based on TOR')
         self.add_argument('url', type=str, help='The url of the target YouTube video')
+        self.add_argument('-d', '--dev', type=bool, default=False, help='Enable development mode', action=BooleanOptionalAction, required=False)
         self.add_argument('-l', '--level', type=int, default=5, help='The number of concurrent browsers to start', required=False)
 
     def parse(self, args: list[str]) -> dict:
