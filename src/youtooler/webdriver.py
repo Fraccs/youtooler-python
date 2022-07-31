@@ -1,45 +1,59 @@
 from random import randint
 from selenium.common.exceptions import *
-from selenium.webdriver import Firefox, DesiredCapabilities
+from selenium.webdriver import Firefox, DesiredCapabilities, FirefoxOptions
+
 from .logs import get_warning_message, get_log_message
 from .utils import get_video_title, stderr
-from .tor import Tor
 
 class YoutoolerWebdriver(Firefox):
     '''
     Firefox webdriver adapted to Youtooler needs
 
     Args:
-    - tor: Tor (Tor object to use as proxy for the webdriver requests)
+    - url: str (The url of the video)
+    - video_duration: int (The duration in seconds of the video)
+    
+    Optionals:
+    - width: int=500 (The width of the Firefox window)
+    - height: int=300 (The height of the Firefox window)
     '''
 
-    def __init__(self, tor: Tor):
-        self.tor = tor
+    def __init__(self, headless: bool, url: str, video_duration: int, width: int=500, height: int=300):
+        self.headless = headless
+        self.url = url
+        self.video_duration = video_duration
+        self.width = width
+        self.height = height
+        self.capabilities = DesiredCapabilities.FIREFOX
+
+    def set_socks_proxy(self, address: str='localhost', port: int=9150) -> None:
+        # Firefox options
+        self.capabilities['proxy'] = {
+            'proxyType': 'MANUAL',
+            'socksProxy': f'{address}:{port}',
+            'socksVersion': 5
+        }
 
     def start(self) -> None:
         '''Starts the Webdriver'''
+        options = FirefoxOptions()
 
-        # Firefox options
-        firefox_capabilities = DesiredCapabilities.FIREFOX
-        firefox_capabilities['proxy'] = {
-            'proxyType': 'MANUAL',
-            'socksProxy': f'localhost:{self.tor.socks_port}',
-            'socksVersion': 5
-        }
-        
+        if not self.headless:
+            options.headless = True
+
         # Firefox startup
-        super().__init__(capabilities=firefox_capabilities)
-        self.set_window_size(500, 300)
+        super().__init__(options=options)
+        self.set_window_size(self.width, self.height)
 
-    def require_video(self, url: str, video_duration: int) -> None:
+    def require_video(self) -> None:
         '''Requires the video with a random time parameter value'''
 
         try:
-            self.get(f'{url}&t={randint(1, video_duration)}s')  
+            self.get(f'{self.url}&t={randint(1, self.video_duration)}s')  
         except:
-            print(get_warning_message('REQUEST-FAILED', f'{self.name}-{self.tor.socks_port}', self.tor.get_external_address()), file=stderr)
+            print(get_warning_message('REQUEST-FAILED', f'', f''), file=stderr)
         else:
-            print(get_log_message('REQUEST-SUCCESSFUL', f'{self.name}-{self.tor.socks_port}', self.tor.get_external_address()))
+            print(get_log_message('REQUEST-SUCCESSFUL', f'', f''))
 
     def accept_cookies(self) -> None:
         '''Accepts the YouTube cookies'''
@@ -54,7 +68,7 @@ class YoutoolerWebdriver(Firefox):
                 except StaleElementReferenceException:
                     print(get_warning_message('PLAY-BTN-UNREACHABLE'), file=stderr)
 
-    def start_video(self, url: str) -> None:
+    def start_video(self) -> None:
         '''Searches the start button and starts the video'''
 
         try:
@@ -66,4 +80,4 @@ class YoutoolerWebdriver(Firefox):
         except ElementNotInteractableException:
             print(get_warning_message('PLAY-BTN-UNSCROLLABLE'), file=stderr)
         else:
-            print(get_log_message('VIDEO-STARTED', get_video_title(url)))
+            print(get_log_message('VIDEO-STARTED', get_video_title(self.url)))
