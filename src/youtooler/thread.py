@@ -32,6 +32,7 @@ class YoutoolerThread(Thread):
             print(get_log_message('TOR-STARTED', self.tor.socks_port, self.tor.control_port))
         
         # WD startup
+        self.webdriver.set_socks_proxy(port=self.tor.socks_port)
         self.webdriver.start()
 
         while True:
