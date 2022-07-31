@@ -23,9 +23,10 @@ class Youtooler:
     __BASE_CONTROL_PORT = 9151
     __STORAGE_DIRECTORY_PATH = '/tmp/youtooler'
 
-    def __init__(self, url: str, level: int):
+    def __init__(self, url: str, level: int, dev: bool):
         self.url = url
         self.level = level
+        self.dev = dev
 
         self.__threads: list[YoutoolerThread] = []
         self.__SOCKS_PORTS = [port for port in range(self.__BASE_SOCKS_PORT, self.__BASE_SOCKS_PORT + (level * 2), 2)]
@@ -46,7 +47,7 @@ class Youtooler:
 
         for (socks_port, control_port) in self.__PORT_RANGE:
             tor = Tor(socks_port, control_port, get_secure_password(), self.__STORAGE_DIRECTORY_PATH)
-            webdriver = YoutoolerWebdriver(self.url, get_video_duration(self.url))
+            webdriver = YoutoolerWebdriver(self.dev, self.url, get_video_duration(self.url))
             webdriver.set_socks_proxy(port=socks_port)
 
             self.__threads.append(YoutoolerThread(webdriver, tor))
