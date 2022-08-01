@@ -1,6 +1,7 @@
 from random import randint
 from selenium.common.exceptions import *
 from selenium.webdriver import Firefox, DesiredCapabilities, FirefoxOptions
+from time import sleep
 
 from .logs import get_warning_message, get_log_message
 from .utils import get_video_title, stderr
@@ -58,6 +59,8 @@ class YoutoolerWebdriver(Firefox):
     def accept_cookies(self) -> None:
         '''Accepts the YouTube cookies'''
 
+        sleep(6)
+
         # Accepting cookies
         cookie_buttons = self.find_elements_by_css_selector('.yt-simple-endpoint.style-scope.ytd-button-renderer')
 
@@ -70,6 +73,8 @@ class YoutoolerWebdriver(Firefox):
 
     def start_video(self) -> None:
         '''Searches the start button and starts the video'''
+
+        sleep(6)
 
         try:
             self.find_element_by_css_selector('.ytp-large-play-button.ytp-button').click()
