@@ -10,7 +10,7 @@ def get_log_message(log: str, *args) -> str:
     '''
 
     log_messages = {
-        'REQUEST-SUCCESSFUL': 'Successful request made by {} | Tor IP: {}',
+        'REQUEST-SUCCESSFUL': 'Successful request made by the IP address: {}',
         'STORAGE-CREATED': 'Successfully created the storage directory',
         'TOR-STARTED': 'Started TOR on SocksPort {}, ControlPort {}',
         'VIDEO-STARTED': '{} started successfully'
@@ -36,7 +36,7 @@ def get_warning_message(warn: str, *args) -> str:
         'PLAY-BTN-NOT-FOUND': 'Could not start the video, the play button could not be found',
         'PLAY-BTN-UNREACHABLE': 'Could not start the video, another element is obscuring the play button',
         'PLAY-BTN-UNSCROLLABLE': 'Could not start the video, the start button could not be scrolled into view',
-        'REQUEST-FAILED': 'Unsuccessful request made by {} | Tor IP: {}'
+        'REQUEST-FAILED': 'Unsuccessful request made by the IP address: {}'
     }
 
     if warning_messages.get(warn) is None:
