@@ -46,15 +46,15 @@ class YoutoolerWebdriver(Firefox):
         super().__init__(options=options)
         self.set_window_size(self.width, self.height)
 
-    def require_video(self) -> None:
+    def require_video(self, tor_ip_address: str) -> None:
         '''Requires the video with a random time parameter value'''
 
         try:
             self.get(f'{self.url}&t={randint(1, self.video_duration)}s')  
         except:
-            print(get_warning_message('REQUEST-FAILED', f'', f''), file=stderr)
+            print(get_warning_message('REQUEST-FAILED', tor_ip_address), file=stderr)
         else:
-            print(get_log_message('REQUEST-SUCCESSFUL', f'', f''))
+            print(get_log_message('REQUEST-SUCCESSFUL', tor_ip_address))
 
     def accept_cookies(self) -> None:
         '''Accepts the YouTube cookies'''
