@@ -36,7 +36,7 @@ class YoutoolerThread(Thread):
         self.webdriver.start()
 
         while True:
-            self.webdriver.require_video()
+            self.webdriver.require_video(self.tor.get_external_address())
             self.webdriver.accept_cookies()
             self.webdriver.start_video()
 
