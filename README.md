@@ -6,6 +6,9 @@
 ![GitHub issues](https://img.shields.io/github/issues/Fraccs/youtooler-python)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/Fraccs/youtooler-python)
 
+> **Warning** <br/>
+> This project was just a fun experiment to learn the language and it has no real-world utility hence it is now archived.
+
 # YouTooler
 
 > Multithreaded YouTube viewer BOT based on TOR.
